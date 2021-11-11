@@ -4,12 +4,15 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node ./"
+    "start": "nodemon ./"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
