@@ -4,7 +4,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-
+      User.hasMany(models.Task);
     }
   }
 
@@ -18,21 +18,21 @@ module.exports = (sequelize, DataTypes) => {
   User.init(
     {
       firstName: {
-        field: 'first_name',
+        field: "first_name",
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
           notNull: true,
-        }
+        },
       },
       lastName: {
-        field: 'last_name',
+        field: "last_name",
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
-        }
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: true,
-        }
+        },
       },
       password: {
         type: DataTypes.TEXT,
@@ -49,20 +49,20 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: true,
-        }
+        },
       },
       birthdate: {
         type: DataTypes.DATE,
         validate: {
           isDate: true,
-        }
+        },
       },
       isSubscribed: {
-        field: 'is_subscribed',
+        field: "is_subscribed",
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true,
-      }
+      },
     },
 
     {
