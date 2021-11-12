@@ -23,6 +23,12 @@ module.exports = {
         type: Sequelize.DATE,
       },
 
+      userId: {
+        field: "user_id",
+        type: Sequelize.INTEGER,
+        references: { model: "users", key: "id" },
+      },
+
       createdAt: {
         field: "created_at",
         allowNull: false,
