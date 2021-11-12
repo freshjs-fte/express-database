@@ -17,17 +17,19 @@ module.exports = {
         field: "is_done",
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        default: false,
+        defaultValue: false,
       },
       deadline: {
         type: Sequelize.DATE,
       },
 
       createdAt: {
+        field: "created_at",
         allowNull: false,
         type: Sequelize.DATE,
       },
       updatedAt: {
+        field: "updated_at",
         allowNull: false,
         type: Sequelize.DATE,
       },
