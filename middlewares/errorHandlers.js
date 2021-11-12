@@ -1,6 +1,9 @@
 module.exports.errorHandler = (err, req, res, next) => {
-    next()
-}
+  // if sequelizeErrHandler(err)
+  // if ...
+
+  endErrHandler(err, req, res, next);
+};
 
 const sequelizeErrHandler = (err, req, res, next) => {
   console.log("error", err.message);
@@ -14,5 +17,6 @@ const sequelizeErrHandler = (err, req, res, next) => {
 
 const endErrHandler = (err, req, res, next) => {
   console.log("error", err.message);
-  res.status(500).send({ error: "My bad. sry" });
+
+  res.status(500).send({ error: err.message });
 };
