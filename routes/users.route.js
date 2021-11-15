@@ -1,5 +1,7 @@
 const userRouter = require("express").Router();
 
+/* Path: /api/users */
+
 userRouter.get("/", (req, res) => {
   console.log("users");
   
