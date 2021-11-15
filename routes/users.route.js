@@ -10,4 +10,7 @@ userRouter.get("/:id", userController.getUserById);
 userRouter.patch("/:id", userController.updateUser);
 userRouter.delete("/:id", userController.deleteUser);
 
+userRouter.get("/:userId/chats", userController.getUserChats);
+userRouter.patch("/chats/:userId/:chatId", userController.addUserChat);
+
 module.exports = userRouter;

@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Chat } = require("../models");
 const _ = require("lodash");
 
 const prepareUser = (body) =>
@@ -19,7 +19,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       return next(new Error("No users found"));
     }
 
-    res.send({ data: users });
+    res.status(200).send({ data: users });
   } catch (error) {
     next(error);
   }
@@ -41,7 +41,7 @@ module.exports.getUserById = async (req, res, next) => {
       return next(new Error("User not found"));
     }
 
-    res.send({ data: foundUser });
+    res.status(200).send({ data: foundUser });
   } catch (error) {
     next(error);
   }
@@ -57,7 +57,7 @@ module.exports.createUser = async (req, res, next) => {
     // const preparedUser = _.omit(user, ["password"]);
     user.password = undefined;
 
-    res.send({ data: user });
+    res.status(201).send({ data: user });
   } catch (error) {
     next(error);
   }
@@ -85,7 +85,7 @@ module.exports.updateUser = async (req, res, next) => {
 
     updatedUser.password = undefined;
 
-    res.send({ data: updatedUser });
+    res.status(200).send({ data: updatedUser });
   } catch (error) {
     next(error);
   }
@@ -110,9 +110,45 @@ module.exports.deleteUser = async (req, res, next) => {
       throw new Error("Cannot delete user");
     }
 
-    res.send({ data: foundUser });
+    res.status(200).send({ data: foundUser });
   } catch (error) {
     // transaction unroll
+    next(error);
+  }
+};
+
+module.exports.addUserChat = async (req, res, next) => {
+  try {
+    const {
+      params: { userId, chatId },
+    } = req;
+
+    const foundChat = await Chat.findByPk(chatId);
+
+    const foundUser = await User.findByPk(userId);
+
+    const chatsOfUser = await foundChat.addUser(foundUser);
+
+    console.log(chatsOfUser);
+
+    res.status(200).send({ data: chatsOfUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getUserChats = async (req, res, next) => {
+  try {
+    const {
+      params: { userId },
+    } = req;
+
+    const foundUser = await User.findByPk(userId);
+
+    const chatsOfUser = await foundUser.getChats();
+
+    res.status(200).send({ data: chatsOfUser });
+  } catch (error) {
     next(error);
   }
 };
