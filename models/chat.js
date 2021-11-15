@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Chat extends Model {
     static associate(models) {
-      Chat.hasMany(models.User, { through: "users_to_chats" });
+      Chat.belongsToMany(models.User, { through: "users_to_chats" });
     }
   }
   Chat.init(
@@ -24,8 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "chat",
+      modelName: "Chat",
+      tableName: "chats",
+      underscored: true,
     }
   );
-  return chat;
+  return Chat;
 };
