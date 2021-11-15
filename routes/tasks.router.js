@@ -9,7 +9,7 @@ tasksRouter.post("/", validateTask, createTask);
 
 // TODO
 tasksRouter.get("/:id", getTaskById);
-tasksRouter.patch("/", getAllTasks);
-tasksRouter.delete("/", getAllTasks);
+tasksRouter.patch("/:id", getAllTasks);
+tasksRouter.delete("/:id", getAllTasks);
 
 module.exports = tasksRouter;
