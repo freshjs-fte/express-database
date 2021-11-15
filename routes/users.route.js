@@ -1,11 +1,13 @@
 const userRouter = require("express").Router();
+const userController = require("../controllers/user.controller");
 
 /* Path: /api/users */
 
-userRouter.get("/", (req, res) => {
-  console.log("users");
-  
-  res.send({ data: ["user1", "user2"] });
-});
+userRouter.get("/", userController.getAllUsers);
+userRouter.post("/", userController.createUser);
+
+userRouter.get("/:id", userController.getUserById);
+userRouter.patch("/:id", userController.updateUser);
+userRouter.delete("/:id", userController.deleteUser);
 
 module.exports = userRouter;
