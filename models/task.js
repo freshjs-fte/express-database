@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         validate: {
           isAfter(value) {
-            if (value >= new Date()) {
+            if (new Date(value) >= new Date()) {
               throw new Error("Only after current date is allowed!");
             }
           },
@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Task",
       tableName: "tasks",
+      underscored: true,
     }
   );
   return Task;

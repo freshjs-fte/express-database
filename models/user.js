@@ -8,13 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  /* 
-  Создайте сущность
-  Task (body, isDone, deadline)
-  Добавьте ограничения в миграцию и в модель
-  Добавьте валидацию в модель
-*/
-
   User.init(
     {
       firstName: {
@@ -44,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       password: {
+        field: 'password_hash',
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
@@ -69,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "User",
       tableName: "users",
-      // underscored: true,
+      underscored: true,
     }
   );
   return User;
