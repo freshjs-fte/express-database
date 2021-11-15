@@ -12,7 +12,9 @@ module.exports.getAllTasks = async (req, res, next) => {
 
 module.exports.getTaskById = async (req, res, next) => {
   try {
-    // const tasks = await Task.findAll();
+    const { params } = req;
+
+    // const tasks = await Task.findByPk();
 
     res.send({ data: "task" });
   } catch (error) {
@@ -26,7 +28,8 @@ module.exports.createTask = async (req, res, next) => {
 
     res.send({ data: task });
   } catch (error) {
-    console.log("err", error);
     next(error);
   }
 };
+
+/* Task CR(UD)  */
