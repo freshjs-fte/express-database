@@ -1,22 +1,44 @@
+const { BaseError, ValidationError } = require("sequelize");
+
+/* Main error handler entrance */
+
 module.exports.errorHandler = (err, req, res, next) => {
-  // if sequelizeErrHandler(err)
-  // if ...
+  const payload = {
+    status: 500,
+    err: "Server Error",
+  };
 
-  endErrHandler(err, req, res, next);
-};
-
-const sequelizeErrHandler = (err, req, res, next) => {
-  console.log("error", err.message);
-
-  if (err instanceof RangeError) {
-    res.status(400).send({ error: "Проверь зарпос" });
-    return;
+  if (clientErrHandler(err, payload)) {
+    res.status(payload.status).send(payload.err);
   }
-  res.status(400).send({ error: err.message });
+  serverErrHandler(err, req, res, next);
 };
 
-const endErrHandler = (err, req, res, next) => {
+/* Client error handlers */
+
+const clientErrHandler = (err, payload) => {
+  let result = false;
+  if (err instanceof BaseError) {
+    result = sequelizeErrHandler(err, payload);
+  }
+  // if ...
+  return result;
+};
+
+/*  Sequelize error handlers */
+
+const sequelizeErrHandler = (err, payload) => {
   console.log("error", err.message);
 
-  res.status(500).send({ error: err.message });
+  if (err instanceof ValidationError) {
+    payload.status = 400;
+    payload.err = { error: "Проверь зарпос" };
+    return true;
+  }
+};
+
+/* Server error handlers */
+
+const serverErrHandler = (err, req, res, next) => {
+  console.log("error", err.message);
 };
