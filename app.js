@@ -9,20 +9,15 @@ app.use(express.json());
 /* Endpoints */
 /* Path: / */
 
-app.get("/", (req, res, next) => {
-  return res.send("Hello World!");
-});
-
 app.use("*", (req, res, next) => {
   // DEBUG
-  // console.log(req.body);
+  // console.log(req.body, req.params, req.method, req.path);
   next();
 });
 
 app.use("/api", router);
 
-app.use(errorHandler);
-
 /*  */
+app.use(errorHandler);
 
 module.exports = app;
