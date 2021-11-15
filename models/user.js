@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Task);
+      User.belongsToMany(models.Chat, { through: "users_to_chats" }); // UserChat
     }
   }
 
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       password: {
-        field: 'password_hash',
+        field: "password_hash",
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
