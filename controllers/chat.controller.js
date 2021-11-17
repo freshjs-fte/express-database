@@ -12,17 +12,23 @@ module.exports.getAllChats = async (req, res, next) => {
 
 module.exports.createChat = async (req, res, next) => {
   try {
-    const foundUser = await User.findByPk(req.body.author);
+    const {
+      body,
+      file: { filename },
+    } = req;
+
+    const foundUser = await User.findByPk(body.author);
 
     if (!foundUser) {
       return next(new Error("User not found"));
     }
 
-    const newChat = await Chat.create({ ...req.body });
+    const newChat = await Chat.create({ body, imageSrc: filename });
 
     await newChat.addUser(foundUser);
 
     res.status(200).send({ data: newChat });
+    next();
   } catch (error) {
     next(error);
   }
@@ -40,7 +46,7 @@ module.exports.updateChat = async (req, res, next) => {
       return next(new Error("User not found"));
     }
 
-    await foundChat.update(req.body)
+    await foundChat.update(req.body);
 
     res.status(200).send({ data: newChat });
   } catch (error) {
@@ -98,4 +104,4 @@ module.exports.getChatMembers = async () => {
   } catch (error) {
     next(error);
   }
-}
+};
