@@ -1,4 +1,5 @@
 {
+  "STATIC_PATH": "public",
   "development": {
     "username": "postgres",
     "password": "postgres",
