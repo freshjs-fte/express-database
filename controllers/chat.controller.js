@@ -28,6 +28,28 @@ module.exports.createChat = async (req, res, next) => {
   }
 };
 
+module.exports.updateChat = async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const foundChat = await Chat.findByPk(id);
+
+    if (!foundChat) {
+      return next(new Error("User not found"));
+    }
+
+    await foundChat.update(req.body)
+
+    res.status(200).send({ data: newChat });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* Magic controllers */
+
 module.exports.addUserChat = async (req, res, next) => {
   try {
     const {
