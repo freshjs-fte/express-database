@@ -1,16 +1,13 @@
 const chatRouter = require("express").Router();
+const { getAllChats, createChat } = require("../controllers/chat.controller");
 
 /* Path: /api/chats */
 chatRouter
   .route("/")
   /*  */
-  .get(function (req, res) {
-    res.send("all chats");
-  })
+  .get(getAllChats)
   /*  */
-  .post(function (req, res) {
-    res.send("created chat");
-  });
+  .post(createChat);
 
 chatRouter
   .route("/:id")
