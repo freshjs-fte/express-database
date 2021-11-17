@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Task, { foreignKey: "user_id" });
-      User.belongsToMany(models.Chat, { through: "users_to_chats" }); // UserChat
+      User.belongsToMany(models.Chat, {
+        through: "users_to_chats",
+        foreignKey: "user_id",
+      }); // UserChat
     }
   }
 
@@ -64,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "User",
       tableName: "users",
-      underscored: true,
+      underscored: true
     }
   );
   return User;

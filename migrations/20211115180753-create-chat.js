@@ -22,6 +22,11 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      imageSrc: {
+        field: "image_src",
+        type: Sequelize.STRING(128),
+        allowNull: false,
+      },
 
       createdAt: {
         field: "created_at",
