@@ -38,11 +38,9 @@ module.exports.addUserChat = async (req, res, next) => {
 
     const foundUser = await User.findByPk(userId);
 
-    const chatsOfUser = await foundChat.addUser(foundUser);
+    await foundChat.addUser(foundUser);
 
-    console.log(chatsOfUser);
-
-    res.status(200).send({ data: chatsOfUser });
+    res.status(200).send({ data: true });
   } catch (error) {
     next(error);
   }
@@ -63,3 +61,19 @@ module.exports.getUserChats = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.getChatMembers = async () => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const foundChat = await Chat.findByPk(id);
+
+    const usersOfChat = await foundChat.getUsers();
+
+    res.status(200).send({ data: usersOfChat });
+  } catch (error) {
+    next(error);
+  }
+}
