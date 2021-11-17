@@ -8,7 +8,9 @@ module.exports.errorHandler = (err, req, res, next) => {
     err: "Server Error",
   };
 
-  if (clientErrHandler(err, payload)) {
+  const verdict = clientErrHandler(err, payload);
+
+  if (verdict) {
     res.status(payload.status).send(payload.err);
   }
   serverErrHandler(err, req, res, next);
@@ -28,17 +30,18 @@ const clientErrHandler = (err, payload) => {
 /*  Sequelize error handlers */
 
 const sequelizeErrHandler = (err, payload) => {
-  console.log("error", err.message);
 
   if (err instanceof ValidationError) {
     payload.status = 400;
     payload.err = { error: "Проверь зарпос" };
     return true;
   }
+  return false;
 };
 
 /* Server error handlers */
 
 const serverErrHandler = (err, req, res, next) => {
   console.log("error", err.message);
+  res.status(500).send({ error: err.message });
 };

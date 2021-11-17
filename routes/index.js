@@ -6,7 +6,7 @@ const usersRouter = require("./users.route");
 
 /* Path: /api */
 router.use("/users", usersRouter);
+router.use("/chats", chatRouter);
 router.use("/tasks", tasksRouter);
-router.use("/chats" , chatRouter);
 
 module.exports = router;

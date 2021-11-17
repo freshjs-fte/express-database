@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     static associate(models) {
-      Task.belongsTo(models.User, { foreignKey: "user_id" });
+      Task.belongsTo(models.User, { foreignKey: "user_id" }); // UserTask
     }
   }
 
@@ -27,14 +27,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         validate: {
           isAfter(value) {
-            if (new Date(value) >= new Date()) {
-              throw new Error("Only after current date is allowed!");
+            if (new Date() >= new Date(value)) {
+              throw new Error("Only after current date is allowed");
             }
           },
         },
       },
       userId: {
         field: "user_id",
+        allowNull: false,
         type: DataTypes.INTEGER,
         references: { model: "User", key: "id" },
       },

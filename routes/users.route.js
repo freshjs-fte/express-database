@@ -1,5 +1,7 @@
 const userRouter = require("express").Router();
+const { createTask, getUserTasks } = require("../controllers/task.controller");
 const userController = require("../controllers/user.controller");
+const { validateTask } = require("../middlewares/tasks.mw");
 
 /* Path: /api/users */
 
@@ -10,7 +12,7 @@ userRouter.get("/:id", userController.getUserById);
 userRouter.patch("/:id", userController.updateUser);
 userRouter.delete("/:id", userController.deleteUser);
 
-userRouter.get("/:userId/chats", userController.getUserChats);
-userRouter.patch("/chats/:userId/:chatId", userController.addUserChat);
+userRouter.post("/:userId/tasks", validateTask, createTask);
+userRouter.get("/:userId/tasks", getUserTasks);
 
 module.exports = userRouter;

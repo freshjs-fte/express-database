@@ -72,6 +72,17 @@ module.exports.updateUser = async (req, res, next) => {
 
     const prep = prepareUser(body);
 
+    const foundUser = await User.findByPk(id);
+
+    if (!foundUser) {
+      return next(new Error("User not found"));
+    }
+
+    // returning default true
+    const updatedUser = await foundUser.update(prep);
+
+    /* 
+      // Multiple update
     const [rowsCount, [updatedUser]] = await User.update(prep, {
       where: {
         id,
@@ -82,6 +93,10 @@ module.exports.updateUser = async (req, res, next) => {
     if (rowsCount === 0) {
       return next(new Error("User not found"));
     }
+
+    if (rowsCount > 1) {
+      return next(new Error("Cannot update user"));
+    } */
 
     updatedUser.password = undefined;
 
@@ -113,42 +128,6 @@ module.exports.deleteUser = async (req, res, next) => {
     res.status(200).send({ data: foundUser });
   } catch (error) {
     // transaction unroll
-    next(error);
-  }
-};
-
-module.exports.addUserChat = async (req, res, next) => {
-  try {
-    const {
-      params: { userId, chatId },
-    } = req;
-
-    const foundChat = await Chat.findByPk(chatId);
-
-    const foundUser = await User.findByPk(userId);
-
-    const chatsOfUser = await foundChat.addUser(foundUser);
-
-    console.log(chatsOfUser);
-
-    res.status(200).send({ data: chatsOfUser });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.getUserChats = async (req, res, next) => {
-  try {
-    const {
-      params: { userId },
-    } = req;
-
-    const foundUser = await User.findByPk(userId);
-
-    const chatsOfUser = await foundUser.getChats();
-
-    res.status(200).send({ data: chatsOfUser });
-  } catch (error) {
     next(error);
   }
 };
